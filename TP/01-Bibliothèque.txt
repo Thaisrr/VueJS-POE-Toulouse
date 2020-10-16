@@ -1,0 +1,11 @@
+- Créer un nouveau doc HTML, avec Vue.JS
+- Créer une liste de livres à afficher dans un tableau
+    1. On affiche juste des titres
+    2. On affiche des objets
+Votre objet prendra en paramétre : Nom, auteur.rice, statut lu ? ( vrai ou faux )
+
+- Si le livre est lu, on affiche "lu" en vert ou bleu
+- Sinon, on affiche " A lire" en rouge ou orange
+
+- Pour ceux qui ont terminé :
+    Créer un formulaire pour ajouter des livres au tableau

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Les Watchers</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <div class="form-group w-50">
+        <label>!True === false ?</label>
+        <input class="form-control" placeholder="Entrez votre réponse" v-model="answer">
+    </div>
+
+    <p v-bind:class="checkAnswer()">Répondez correctement pour afficher en vert !</p>
+
+    <div class="form-group w-50">
+        <label>Quelle est la couleur du cheval blanc d'Henri IV ?</label>
+        <input class="form-control" placeholder="Entrez votre réponse" v-model="answer2">
+    </div>
+
+    <!-- checkAnswer2 n'est plus une méthode mais une propriété computed
+    Au lieu de s'exécuter à chaque modification, elle ne s'exécute que lorsqu'on modifie la valeur qu'elle surveille
+    -->
+    <p v-bind:class="checkAnswer2">Répondez correctement pour afficher en vert !</p>
+
+    <!-- On peut mettre des expressions dans les templates
+    mais en cas d'expression trop complexe, le code devient difficile à lire :
+    -->
+    <p>{{ message.split('').reverse().join('') }}</p>
+
+    <!-- On passe donc par un computed, pour faire le traitement, et récupérer un nom de variable compréhensible et logique : -->
+
+    <p>{{ reversed_message }}</p>
+
+    <p>{{ name }} {{ last_name }}</p>
+
+    <p>{{fullName}}</p>
+
+    <div class="form-group">
+        <label>Votre nom :</label>
+        <input v-model="fullName">
+    </div>
+
+
+    <div class="form-group">
+        <label>Livre:</label>
+        <input v-model="book">
+    </div>
+
+</div>
+
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            answer : '',
+            answer2 : '',
+            message : "Les chaussettes de l'archiduchesse sont-elles seches archi seches",
+            name : 'Germaine',
+            last_name : 'LaTourte',
+            book: ''
+        },
+        methods: {
+            checkAnswer: function () {
+                console.log('In check answer method');
+                return (this.answer === 'true') ? 'text-success' : 'text-danger';
+            },
+        },
+        computed : {
+            checkAnswer2: function () {
+                console.log('In check answer 2 computed');
+                return (this.answer2 === 'blanc') ? 'text-success' : 'text-danger';
+            },
+            reversed_message : function () {
+                console.log('in reverse message computed');
+                return this.message.split('').reverse().join('')
+            },
+            fullName: {
+                get: function () {
+                    return this.name + ' ' + this.last_name;
+                },
+                set : function (value) {
+                    /* Value -> string
+                    Avec split, je divise ma string au niveau des espaces
+                    "Jean Neige" -> split(' ')
+                    -> ['Jean', 'Neige']
+                     */
+                    const array = value.split(' ');
+                    this.name = array[0];
+                    this.last_name = array[1];
+                }
+            }
+            /*
+            Un valeur computed est une valeur qu'on récupére par défaut, uniquement en lecture.
+            Pour pourvoir la modifier, il faut utiliser le principe de getter et setter
+            le getter return la valeur
+            le setter la modifie en modifiant les datas dont elle hérite.
+             */
+
+        },
+        watch : {
+            book: function (value) {
+                console.log('The best book ever is now : ' + value);
+            }
+        }
+    })
+</script>
+</body>
+</html>

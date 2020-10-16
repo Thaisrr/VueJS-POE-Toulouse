@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bibliothéque</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <table class="table table-hover w-75 m-auto">
+        <thead class="thead-dark">
+        <tr> <!-- table row -> ligne -->
+            <th>Id</th>
+            <th>Name</th> <!-- Table Header : titres de colonne ou de ligne  -->
+            <th>Author</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody> <!-- Pour chaque ligne de notre liste de livres, on créé une ligne de tableau -->
+        <tr v-for="(book, index) of l_books"> <!-- table row -> ligne -->
+            <td>{{index}}</td>
+            <td>{{ book.name }}</td> <!-- Table Data : donnée du tableau -->
+            <td>{{ book.author }}</td>
+            <td v-bind:class="changeClass(book.isRead)">{{ book.isRead }}</td>
+            <!-- La fonction changeClass attend un boolean en paramétre, je lui envoie donc book.isRead, puisque la couleur
+            de mon texte se change en fonction de sa valeur -->
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    let l_books = [
+        {name: "L'Assassin Royal", author:"Robin Hobb", isRead: true},
+        {name: "Les Culottés", author:"Pénélope Bagieu", isRead: true},
+        {name: "Nana", author:"Emile Zola", isRead: false},
+        {name: "Les Hauts de Hurlevent", author:"Emily Bronte", isRead: false},
+        {name: "Game of Throne", author:"George Martin", isRead: false},
+    ];
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            l_books
+        },
+
+        methods : {
+            changeClass : function (isRead) { // On doit envoyer un boolean / une condition en paramétre
+                return (isRead) ? 'text-success' : 'text-warning'
+                /* SI isRead === true -> retourn 'text-success' sinon, on retourne 'text-warning' */
+            }
+        }
+    });
+/*
+    let my_bool = true;// Boolean : true ou false
+    let my_numb = 5; // =  assignation
+    let my_condition = 5 === 6 // condition : je vérifie si les deux valeur sont les mêmes
+    console.log(my_condition) -> true / false
+*/
+
+    /**
+     * === -> egal à
+     *  < > <= >= superieur ( ou egal ) inferieur ( ou egal )
+     *  != différent
+     */
+    /*if ( 5 < 6 ) {
+        fait qqch...
+    } else {
+        fait autre chose
+    }
+    */
+
+
+
+</script>
+
+
+</body>
+</html>

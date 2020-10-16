@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Les Formulaires</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app" class="w-50 mx-auto">
+    <ul>
+        <li class="text-danger" v-for="error of l_errors">{{ error }}</li>
+    </ul>
+
+        <div class="form-row mt-5">
+            <div class="col">
+                <input v-model="new_user.first_name" type="text" class="form-control" placeholder="First name">
+            </div>
+            <div class="col">
+                <input v-model="new_user.last_name" type="text" class="form-control" placeholder="Last name">
+            </div>
+            <div class="col">
+                <button class="btn btn-primary" v-on:click="addUser()">Enregistrer</button>
+            </div>
+        </div>
+
+    <!-- On met le v-for dans l'élément HTML qu'on veut répéter.
+    Ici on veut faire une ligne pour chaque utilisateur.
+    On met donc le v-for dans le li -->
+    <h4 class="mt-3">Mes utilisateur.rice.s</h4>
+
+    <p v-if="l_users.length <= 0" >Vous n'avez pas enregistré d'utilisateur.rice pour le moment</p>
+
+    <ul >
+        <li v-for="user of l_users">{{ user.first_name}} {{ user.last_name }}</li>
+    </ul>
+
+    <p>{{user.first_name}}</p>
+
+
+</div>
+
+
+<script>
+
+     class User {
+         first_name;
+         last_name;
+
+         // Method
+         sayHello() {
+             console.log(this.first_name + ' says hello !')
+         }
+     }
+
+    const app = new Vue({
+        el: '#app',
+        data: {
+            new_user : new User(),
+            user: new User(),
+           //new_user : {first_name: undefined, last_name: undefined},
+            l_users: [],
+            l_errors: []
+        },
+        methods: {
+            addUser: function () {
+                // On vide la liste d'erreur pour éviter qu'elles ne s'accumulent
+                this.l_errors = [];
+                /*
+                Vérification de formulaire :
+                    -> On vérifie que le champs n'est pas nul
+                */
+                if(this.new_user.first_name && this.new_user.last_name && this.new_user.first_name.length > 2 ) {
+                    /*On utilise Object.assign pour cloner notre objet,
+               sans copier la même référence mémoire.
+                */
+                    let foo = Object.assign({}, this.new_user);
+                    this.l_users.push(foo);
+                    this.new_user = new User();
+                }
+                else {
+                    if(!this.new_user.first_name) {
+                        this.l_errors.push('Veuillez entrez votre prénom');
+                    }
+                    if(!this.new_user.last_name) {
+                        this.l_errors.push('Veuillez entrez votre nom');
+                    }
+                }
+            }
+        }
+    });
+
+
+</script>
+</body>
+</html>

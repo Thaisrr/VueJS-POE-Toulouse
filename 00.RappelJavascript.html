@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rappel JS</title>
+
+</head>
+<body>
+
+
+    <p id="message"></p>
+    <button onclick="changeName()">Moi c'est pas Germaine !</button>
+
+
+
+    <script>
+        /* Pour Afficher une variable JS dans du HTML */
+        let name = "Germaine";
+        const my_p = document.getElementById('message');
+        my_p.textContent = 'Hello ' + name;
+        
+        changeName = function () {
+            name = "Robert";
+            console.log(name);
+        };
+        /*
+        String : chaîne de caractère : en '' ou "" ou `` ( atl-gr +  7 )
+        Number : nombres entiers ou à virgule
+        Boolean : True / False ( ou une condition qui renvoie vrai ou faux )
+        Objets
+        */
+        let list = ['Orange', 'Patate', 'Choux de Bruxelles'];
+        let bool = 5 < 4; // Boolean False
+        let user = {
+            name: 'Charles Xavier',
+            mail: 'charles.xavier@mail.com',
+            age: 234,
+            isTeacher: true,
+            hobbies: ['Lire dans les pensées', 'Faire des discours motivants', 'Etre trahi par Magneto'],
+            l_articles:[ // Une liste d'objets
+                 // Variable article qui est instanciée en dessous, qui est un objt
+                {
+                    title : 'Mon second article',
+                    date: '23/04/18'
+                }
+            ]
+        };
+        let article = {
+            title : 'Mon article',
+            date: '30/06/24',
+        };
+
+
+        console.log(user.name);
+        user.hobbies.forEach(hobby => console.log(hobby));
+        user.l_articles.forEach(article => console.log(article.title));
+
+        /* Les fonctions JS */
+
+        /* Ecriture basique, à l'ancienne */
+        function sayHello() {
+            console.log('Hello World');
+        }
+
+        sayHello();
+
+        /* Ecriture ecmascript 5 */
+        sayHi = function (name) {
+            console.log('Hello there ' + name);
+        };
+
+        sayHi('General Kenobi');
+
+
+        destroyWorld = () => {
+            console.log('Order 6666');
+            console.log('Destroying the world !')
+        };
+
+        /* Class : */
+        class User {
+            name;
+            email;
+
+            constructor(p_name, p_email) {
+                this.name = p_name;
+                this.email = p_email;
+            }
+        }
+
+        /* Instance de class : objet */
+        let user2 = new User('Toto', 'toto@mail.com');
+
+        const diviser = (x, y) => {
+            if(isNaN(x) || isNaN(y)) return 'This is not a number';
+            return x / y;
+        };
+
+        console.log(diviser(3, 6));
+        console.log(diviser('Patate', 'Brocolis'));
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

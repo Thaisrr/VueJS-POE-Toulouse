@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filtres et customisation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <p>{{ title | uppercase }}</p>
+    <p>{{ title | capitalize }}</p>
+    <p>{{ title | titelize }}</p>
+    <p>Mon titre sans filter : {{ title }}</p>
+
+    <p>{{pal | isPalindromme}}</p>
+    <p>{{pal2 | isPalindromme}}</p>
+
+
+
+</div>
+
+
+<script>
+
+    /* Pour créer un filtre personnalisé, on utilise la méthode filter,
+    qui prend en paramétre :
+        - Une chaîne de caractère -> Le nom qu'on donne a notre filtre
+        - Une fonction -> le traitement à effectuer
+     */
+    Vue.filter('uppercase', function (value) {
+        if(!value) return ''; // Si value est vide -> retourne une chaîne vide
+        value = value.toString(); // On s'assure d'avoir une chaîne de caractère
+        return value.toUpperCase(); // Uppercase :: pour tout mettre en capital.
+        // toLowerCase() -> pour mettre une string en minuscule
+    });
+
+    Vue.filter('capitalize', function (value) {
+        if(!value) return '';
+        // On va chercher le caractère à l'index 0 -> donc le premier, on le met en maj
+        let first_letter  = value.charAt(0).toUpperCase();
+        // On met en min tous les caractères sauf le 1er
+        let other_letters = value.substr(1).toLowerCase();
+        return first_letter + other_letters;
+    });
+
+    Vue.filter('titelize', function (value) {
+        if(!value) return '';
+        // Je mets chacun de mes mots dans un tableau
+        let l_values = value.split(' ');
+        for(let i = 0; i < l_values.length; i++) {
+            l_values[i] = l_values[i].charAt(0).toUpperCase()
+                + l_values[i].substr(1).toLowerCase();
+        }
+        return l_values.join(' ');
+    });
+
+
+
+
+    /* Créer un filtre titlelize qui met en majuscule la première lettre chaque mot */
+
+
+    /*
+    Créer un filtre qui renvoie vérifie si une string est un palidromme ou non
+    ( se lit dans les deux sens -> kayak )
+    variable ' est un palindromme'
+    ou variable n'est pas un palindromme
+
+    <p>{{ title | isPalindromme}}</p>
+    dans le html je dois avoir :
+    valeur title + ' est un palidromme '
+                + ' n'est pas un palindromme'
+
+     */
+
+    Vue.filter('isPalindromme', function (value) {
+        if(!value) return 'Cette chaîne est vide';
+        let val = value.toLowerCase().trim();
+        let reversed = value
+            .toLowerCase() // On met en minuscule pour éviter les pb de maj
+            .trim() // on retire les espaces en début et fin de chaîne
+            .split('') // On divise en tableau
+            .reverse() // On inverse le tableau
+            .join(''); // On transforme le tableau en string
+
+        return (reversed === val) ?
+            `${val} est un palindrome : ${reversed}`
+            : `${val} n'est pas un palindrome : ${reversed}`;
+    });
+
+    const app = new Vue({
+        el: '#app',
+        data : {
+            title: 'mon super titre',
+            pal: 'kayak',
+            pal2: 'toto'
+        },
+        methods: {
+            changeTitle : function () {
+                this.title = 'Another Title';
+            },
+            capitalizeString : function (truc) {
+                truc = truc.toUpperCase();
+                return truc;
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

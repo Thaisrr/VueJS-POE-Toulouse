@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Le Data Binding</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+   <style>
+        .text-red {color: red}
+        .text-blue { color: deepskyblue}
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <h2 class="text-info">Mon image </h2>
+        <img v-bind:src="img" v-bind:alt="alt" v-bind:width="width">
+        <!-- On peut raccourcir le v-bind en préfixant l'attribut par deux points :
+        Attention à ne pas les oublier cepandant, sinon les valeurs ne seront pas interprétées -->
+        <img :src="img" :alt="alt" :width="width">
+
+        <p :class="changeClass()" v-bind:title="title">Mon super Paragraphe</p>
+
+        <!-- On peut utiliser la concatenation dans les bind -->
+        <button v-bind:class=" 'btn-outline-' + changeClassBootstrap() " class="btn">Clic Clic</button>
+        <p v-bind:class=" 'text-' + changeClassBootstrap() " >Un autre paragraphe !</p>
+
+        <p> {{ test() }}</p>
+
+        <ul class="list-group w-50">
+            <li v-for="vegetable of l_vegetables" class="list-group-item">{{ vegetable }}</li>
+        </ul>
+
+        <ul class="list-groupe w-50">
+            <li v-for="product of l_products" class="list-group-item">{{ product.name }} -> {{ product.price}}€</li>
+        </ul>
+
+        <!-- Affiche le paragraphe uniquement si la condition est vrai, ici: si le boolean isVisible est true -->
+        <button class="btn btn-outline-primary" v-on:click="isVisible = !isVisible">Afficher mon secret</button>
+        <p v-if="isVisible">Mon paragraphe secret</p>
+        <p v-show="isVisible">Mon deuxième secret</p>
+        <!-- Avec -show, l'élément existe dans le DOM, c'est le CSS qui est modifié : display : none,
+        il est moins gourmant que le v-if, et donc plus rapide,
+        et a préféré en cas d'utilisation répété / de modification répétée.
+        Le v-if offre plus de possibilité : v-else-if , v-else -->
+        <br>
+        <input type="text" v-model="name">
+
+        <p v-if="name !== undefined && name !== ''">Vous êtes {{ name }}</p>
+        <!-- v-else-if="condition" -->
+        <p v-else>Vous n'avez pas de nom 😢</p>
+
+        <input type="text" v-model="model">
+        <p>{{model}}</p>
+
+        <!-- Nom prenom -->
+        -> Utilisateur -> user.nom user. prenom
+
+
+
+
+
+    </div>
+
+    <!--
+     Avec le v-bind, on peut interpréter une valeur / variable dans vue JS ( data )
+     On peut aussi utiliser une méthode, et la valeur de retour sera interprété
+     -->
+
+
+<script>
+
+
+    class Product {
+        name;
+        price;
+
+        constructor(p_name, p_price) {
+            this.name = p_name;
+            this.price = p_price;
+        }
+    }
+
+    const app = new Vue({
+        el: '#app',
+        data: {
+            img: 'https://sm.ign.com/ign_fr/news/b/baby-yoda-/baby-yoda-is-being-added-to-minecraft_bjqc.jpg',
+            alt: 'Ma super image !',
+            width: 300,
+            title: 'Un paragraphe qui change de couleur !',
+            l_vegetables: ['Patates', 'Artichauds', 'Mangues', 'Pommes'],
+            l_products: [
+                new Product('Ordinateur', 2300),
+                new Product('Souris', 20),
+                {name: 'Clavier', price: 30}
+            ],
+            isVisible: false,
+            name: undefined,
+            model: 'Hello World !'
+        },
+        methods: {
+            changeClass: function () {
+                // Math.random() -> Pour générer un nombre aléatoire entre 0 ( inclu ) et 1 (exclu )
+                // Ici pour un nombre entre 1 et 2
+                const my_numb = Math.floor(Math.random() * 2) + 1;
+                console.log(my_numb);
+                return (my_numb === 2) ? 'text-red' : 'text-blue'; // Expression ternaire
+               /* if(my_numb === 2) {
+                    return 'text-red';
+                } else {
+                    return 'text-blue';
+                } */
+
+            },
+            changeClassBootstrap: function () {
+                const my_numb = Math.floor(Math.random() * 2) + 1;
+                return (my_numb === 2) ? 'primary' : 'warning';
+            },
+            test: function() {
+            }
+        }
+
+
+    })
+</script>
+
+</body>
+</html>

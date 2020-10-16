@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://kit.fontawesome.com/22dce008cd.js" crossorigin="anonymous"></script>
+
+    <style>
+        i {
+            float: right;
+            margin-right: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app" class="w-75 m-auto">
+
+    <h1>Administration</h1>
+
+    <h3 class="my-5">Utilisateur·rice·s</h3>
+
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>Nom <i v-on:click="sort = 'last_name'" class="fas fa-arrow-circle-down"></i></th>
+            <th>Prénom
+                <i v-on:click="sort = 'first_name'" class="fas fa-arrow-circle-down"></i>
+            </th>
+            <th>Exp <i v-on:click="sort = 'exp'" class="fas fa-arrow-circle-down"></i></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="user of sorted_list">
+            <td>{{ user.last_name | uppercase }}</td>
+            <td>{{ user.first_name | capitalize }}</td>
+            <td>{{ user.experience | floatify  }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+<script>
+    let l_users = [
+        { first_name: 'jean', last_name: 'JAMBON', experience: 2.4 },
+        { first_name: 'Micheline', last_name: 'Tourte', experience: '3' },
+        { first_name: ' Mohamed ', last_name: 'Hamburger', experience: '5,9' },
+        { first_name: 'SopHiE', last_name: 'sushi', experience: 2.4 }
+    ];
+
+    Vue.filter('capitalize', function (value) {
+        if(!value) return '';
+        let l_values = value.split(' ');
+        for(let i = 0; i < l_values.length; i++) {
+            l_values[i] = l_values[i].charAt(0).toUpperCase()
+                + l_values[i].substr(1).toLowerCase();
+        }
+        return l_values.join(' ');
+    });
+
+    Vue.filter('uppercase', function (value) {
+        if(!value) return '';
+        return value.trim().toUpperCase();
+    });
+
+    Vue.filter('floatify', function (value) {
+        if(!value) return '';
+        let result = Number(value.toString().trim().split(',').join('.'));
+        if(isNaN(result)) return '';
+        return result;
+    });
+
+    const app = new Vue({
+        el: '#app',
+        data: {
+            l_users,
+            sort: 'last_name'
+        },
+        methods: {
+
+        },
+        computed: {
+            sorted_list: function () {
+                switch (this.sort) {
+                    case 'first_name' :
+                        return l_users.sort((a, b) => (a.first_name <= b.first_name) ? -1 : 1);
+                    case 'exp' :
+                        return l_users.sort((a, b) => (a.experience <= b.experience) ? -1 : 1);
+                    case 'last_name' :
+                    default:
+                        return l_users.sort((a, b) => (a.last_name <= b.last_name) ? -1 : 1);
+                }
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Instance and Life Cycle</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <!-- Les Propriétés de  Vue JS ---------->
+
+    <!-- La variable a existe dans l'instance de Vue, elle est déclarée, et donc dynamique et modifiable -->
+    <p>{{ a }}</p>
+
+    <!--
+     Ici ma variable b n'est pas déclarée : Vue JS va afficher un Warning
+     Même si je créé la variable après, elle ne s'affichera pas, et ne sera pas dynamique
+     => Seul les variables créées avant l'initialisation sont rendues, et réactives
+     -->
+    <p>{{ b }}</p>
+
+    <!-- Ici on récupère la valeur de c dans le rendu, mais elle n'est toujours pas réactive,
+     puisque non déclarée dans l'instance de vue
+     -->
+    <p>{{ c = 'Bidule' }}</p>
+
+    <!--
+    Pour accéder aux variables déclarées dans vue, il suffit de faire this. 'le nom de la propriété créée'
+    app.$data -> la propriété native de vue
+    app.data -> une propriété que je créé
+    -->
+
+    <!----- Cycle de vie de Vue ---------------------------------->
+
+    <!-- DOM : Document Object Model
+
+    beforeCreated
+    created -> Les variables sont créées, on passe à la création de la vue
+
+    beforeMounted
+    mounted -> Le DOM virtuel est créé : on a une copie de el -> $el
+
+    beforeUpdate
+    update -> itération pendant le rendu, à chaque modification
+
+    beforeDestroy
+    destroy -> le DOM virtuel est détruit, si on reste sur la page, c'est le DOM natif qui est affiché.
+    La page n'est plus dynamique
+    -->
+
+
+
+
+
+
+</div>
+
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            a: 'Hello World !',
+            seconds: 0
+        },
+        beforeCreate: function () {
+            console.log('Before Created A = ' + this.a)
+        },
+        created : function () {
+            console.log('Created A = ' + this.a);
+        },
+        mounted: function () {
+            this.$interval = setInterval( () => {
+                this.seconds++;
+                console.log('Timer ' + this.seconds);
+            }, 1000)
+        },
+        beforeDestroy: function () {
+            console.log('Destroying');
+        },
+        destroyed: function () {
+            console.log('Instance destroyed');
+            console.log(this.a); // Les variables existent toujours
+
+            clearInterval(this.$interval);
+        }
+    })
+</script>
+
+</body>
+</html>

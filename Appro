@@ -1,0 +1,12 @@
+-> Composant + leur utilisation dans une appli vue
+-> fichier.vue
+-> Routage
+-> Appels à une API
+
+
+-> Ce dont il faut se souvenir
+    - Logique de Template ( v-if, v-for, v-bind )
+    - Instance de vue et propriétés : data, methods, computed, watchers
+    - Javascript : gestion d'objets et manipulation d'array
+
+

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TODO List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <p v-show="error" class="text-danger">{{ error }}</p>
+
+    <div>
+        <label for="task">Tâche :</label>
+        <input id="task" v-model="new_task">
+        <button v-on:click="validate()">Valider</button>
+    </div>
+
+    <h4>Mes missions</h4>
+    <ul>
+        <li v-for="(task, index) of l_tasks">
+            {{ task }}
+            <button v-on:click="deleteTask(index)">Supprimer</button>
+        </li>
+    </ul>
+
+</div>
+
+
+
+<script>
+
+    class User {
+        name;
+        email;
+
+
+        constructor(name, email) {
+            this.name = name;
+            this.email = email;
+        }
+    }
+
+    let my_user = new User('Michel', );
+
+    const app = new Vue({
+        el: '#app',
+        data : {
+            new_task: '',
+            l_tasks : [],
+            error : undefined
+        },
+        methods : {
+            addTask: function () {
+                this.l_tasks.push(this.new_task);
+                this.new_task = '';
+            },
+            validate: function () {
+                this.error = undefined;
+                if(!this.new_task) {
+                    this.error = 'Vous ne pouvez pas enregistrer une tâche vide';
+                } else {
+                    this.addTask();
+                }
+            },
+            deleteTask: function (index) {
+                /* Première méthode : JS - nulle */
+
+                /*
+                console.log(task);
+                const index = this.l_tasks.findIndex(item => item === task);
+                console.log(index);
+                this.l_tasks.splice(index, 1);
+                */
+
+                /* Méthode 2 OK */
+                //this.l_tasks.splice(index, 1);
+
+                /* Méthode Ansaka / Vue : super */
+                Vue.delete(this.l_tasks, index);
+            }
+        }
+    });
+
+    console.log(app)
+</script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+1. Afficher une liste d'utilisateurs dans un tableau en filtrant pour afficher les données
+de manière uniforme :
+    - Le prénom commence par une Majuscule
+    - Le nom de famille est en capitales
+    - L'expérience est en nombre au format n.n
+
+    let users = [
+        { first_name: 'jean', last_name: 'JAMBON', experience: 2.4 },
+        { first_name: 'Micheline', last_name: 'Tourte', experience: '3' },
+        { first_name: ' Mohamed ', last_name: 'Hamburger', experience: '5,9' },
+        { first_name: 'SopHiE', last_name: 'sushi', experience: 2,4 }
+    ];
+
+Filter floatify
+
+2 -> number
+'2' -> string
+
+
+
+Number(x) /!\ peut déclancher un NaN ( Not a Number )
+
+-> on enlève les virgules
+    'ananas'.split('a')
+    ['n', 'n', 's'].joind('o')
+    -> ononos
+
+
+    Number(x)
+
+
+2. Trier le tableau par ordre alpha sur les noms de famille
+
+users
+sorted_users
+
+3 4 1 2
+-> .sort() -> 1 2 3 4
+Objet
+
+.sort(
+() => {}
+function() {}
+)

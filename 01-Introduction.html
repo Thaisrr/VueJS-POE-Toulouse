@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+<!-- Vue JS fonctionnera dans la div app -->
+<div id="app">
+    <p>Hello {{ msg }}</p>
+
+    <button v-on:click="changeName()">Changer de nom</button>
+
+    <!-- Grâce à Vue, on peut interpréter des opérations, et expressions directement dans le HTML -->
+    <p>1 + 1</p> <!-- Pas d'interprétation car pas de moustaches -->
+    <p>{{ 1 + 1 }}</p> <!-- Interprétation d'expression -->
+    <p>{{ 6 > 9 }}</p> <!-- Interprétation d'un boolean : vrai / faux -->
+    <p>Nous sommes le {{ date }} et il est {{ hour }}</p>
+    <p>{{ a * b }}</p> <!-- Opération avec des attributs Data de vue -->
+    <p>{{ raw_html }}</p> <!-- Les Moustaches n'interprétent pas le HTML, elles vont l'afficher en String -->
+    <!-- Pour interpréter du HTML, on utilise l'attribut v-html
+     Attention aux failles XSS
+     -->
+    <p> Html : <span v-html="raw_html"></span></p>
+</div>
+
+<script>
+
+    /* ------- Vue JS ------ */
+
+    const app = new Vue({
+        el: '#app', // L'id de l'élément HTML dans lequel va tourner Vue
+        data: { // Une liste de valeurs à envoyer au HTML
+            msg: 'Ginette',
+            date: new Date().toLocaleDateString(),
+            hour: new Date().toLocaleTimeString(),
+            a: 345,
+            b : 98,
+            raw_html: '<a href="http://www.dawan.fr">Lien vers Dawan</a>'
+        },
+        methods : {
+            changeName: function () {
+                this.msg = 'George';
+            }
+        }
+    });
+    console.log(app.msg);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Les Arrays</title>
+</head>
+<body>
+
+
+<script>
+    // Pour créer une liste, on liste les items entre crochets, séparés par des virgules
+    // Ici, une liste de strings
+    let l_fruits = ['Pomme', 'Poire', 'Ananas'];
+
+    // Récupérer un élément :
+    // Attention, le premier élément d'une liste est 0;
+    console.log('Mon premier item : ' + l_fruits[0]);
+    // Si on appelle une valeur qui n'existe pas, ( donc trop grande ou trop petite ),
+    //le resultat sura 'undefined'
+
+    // Length :
+    console.log('Taille de ma liste : ' + l_fruits.length + ' items');
+
+    // Pour parcourir une liste
+
+    // Façon 1, à l'ancienne
+    for(let i = 0; i < l_fruits.length; i++) {
+        console.log('Item à la position ' + i + ': ' + l_fruits[i]);
+    }
+
+    // Façon numéro 2
+    for(let f of l_fruits) {
+        console.log(f);
+    }
+        /*
+         A la première itération, f sera egal à l_fruits[0],
+         puis à la seconde l_fruits[1], ect...
+         */
+
+     // Façon ES6 ( ecmascript )
+    /*
+    Un array c'est un objet JS -> donc avec des méthodes utilisable
+    fruit correspond à une variable temporaire, valable le temps de l'itération
+    et qui contient la valeur de l'item visé par l'itération
+    ( a la première iT fruit = l_fruits[0]
+     */
+    l_fruits.forEach(fruit => {
+        console.log(fruit);
+    });
+
+    // Ajouter un élément à la liste :
+    l_fruits.push('Mangue');
+    console.log(l_fruits);
+
+    // Supprimer le dernier élément d'un array
+    l_fruits.pop(); // Ici, on supprime 'mangue'
+
+    // Supprimer le premier élément d'un array
+    l_fruits.shift(); // Ici, on supprimer 'pomme'
+
+    l_fruits.push('Mangue');
+    console.log(l_fruits);
+
+    // Supprimer un élément à partir de son index
+    let index = 2;
+
+    // Supprimer 1 élément à partir de la position l_fruits[index] soit l_fruits[2]
+    l_fruits.splice(index, 1);
+    /* En premier paramétre on donne l'index de l'élément à supprimer /
+    ou l'index à partir duquel on veut supprimer
+    En second paramétre on donne le nombre d'éléments à supprimer
+     */
+    console.log(l_fruits);
+
+    /* A connaître absolument :
+    - > Création de liste
+    -> La logique derrière list[n]
+    -> Parcourir une liste
+    -> Supprimer un élément de liste
+     */
+
+    l_fruits = ['Pomme', 'Poire', 'Ananas', 'Mangue', 'Poire'];
+    // Trouver l'index d'un élément
+    const my_index = l_fruits.findIndex(item => item === 'Poire');
+    // Si il ne trouve, il renvoie -1
+    /* Ici il va renvoyer le premier index qu'il va trouver - dans l'ordre,
+    qui correspond à ma condition / demande
+    -> Pour l'exemple il va renvoyer le premier index qu'il trouve qui
+    correspond à un élément 'Poire'
+     */
+    console.log('Index de poire : ' + my_index);
+   // l_fruits.splice(my_index, 1);
+    console.log(l_fruits);
+
+    /*
+    Pour supprimer toutes mes poires,
+    on peut refaire plusieurs fois le findIndex, et tant qu'il renvoie pas -1,
+    c'est qu'il y a toujours une poire, donc on la supprimer.
+    On arrête dès que findIndex renvoie -1
+     */
+    while(l_fruits.findIndex(item => item === 'Poire') !== -1) {
+        l_fruits.splice(
+            l_fruits.findIndex(item => item === 'Poire')
+            , 1
+        );
+    }
+    console.log(l_fruits);
+
+
+</script>
+
+</body>
+</html>
